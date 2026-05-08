@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Vineet Lot — AI & Data Science</title>
+<title>Vineet Lot — Data Analyst</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -72,7 +72,16 @@
       linear-gradient(90deg, var(--ink) 1px, transparent 1px);
     background-size: 60px 60px;
   }
-  .hero-content { position: relative; z-index: 1; max-width: 700px; }
+  .hero-content {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center; width: 100%;
+  }
+  .hero-left {}
+  .hero-right {
+    display: flex; flex-direction: column; gap: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+  }
   .hero-tag {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
@@ -89,15 +98,15 @@
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
   h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-size: clamp(3rem, 5vw, 5.5rem);
     font-weight: 700; line-height: 1.05;
     letter-spacing: -0.03em; color: var(--ink);
     opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
   }
   h1 em { font-style: normal; color: var(--accent); }
   .hero-sub {
-    font-size: 1.15rem; font-weight: 300; line-height: 1.7;
-    color: var(--muted); margin-top: 1.5rem; max-width: 560px;
+    font-size: 1.1rem; font-weight: 300; line-height: 1.75;
+    color: var(--muted); margin-top: 1.5rem;
     opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
   }
   .hero-actions {
@@ -120,6 +129,8 @@
     transition: border-color 0.2s, transform 0.2s;
   }
   .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* HERO STATS */
   .hero-stats {
     display: flex; gap: 3rem; margin-top: 4rem;
     opacity: 0; animation: fadeUp 0.7s 1s forwards;
@@ -129,27 +140,38 @@
     font-size: 2rem; font-weight: 700; color: var(--ink);
   }
   .stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
-  .hero-visual {
-    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
-    z-index: 1;
-    opacity: 0; animation: fadeIn 1s 1.2s forwards;
+  .hero-visual { display: none; }
+
+  /* HERO RIGHT — Info cards */
+  .hero-info-card {
+    background: var(--card-bg); border: 0.5px solid var(--border);
+    border-radius: 14px; padding: 1.5rem 1.75rem;
+    transition: transform 0.2s, border-color 0.2s;
+    position: relative; overflow: hidden;
   }
-  .code-card {
-    background: var(--ink); color: #a8e6cf;
-    font-family: 'DM Mono', monospace; font-size: 0.78rem;
-    padding: 1.5rem; border-radius: 12px;
-    width: 320px; line-height: 1.8;
-    box-shadow: 0 40px 80px rgba(26,26,46,0.18);
+  .hero-info-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
   }
-  .code-card .c-green { color: #52B788; }
-  .code-card .c-blue { color: #7EC8E3; }
-  .code-card .c-yellow { color: #F9E784; }
-  .code-card .c-muted { color: #6b8a7a; }
-  .code-dots { display: flex; gap: 6px; margin-bottom: 1rem; }
-  .code-dots span { width: 10px; height: 10px; border-radius: 50%; }
-  .code-dots .r { background: #FF5F57; }
-  .code-dots .y { background: #FFBD2E; }
-  .code-dots .g { background: #27C93F; }
+  .hero-info-card:hover { transform: translateY(-3px); border-color: rgba(45,106,79,0.2); }
+  .hero-card-label {
+    font-size: 0.7rem; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.6rem;
+  }
+  .hero-card-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 700; color: var(--ink); line-height: 1.1;
+  }
+  .hero-card-desc { font-size: 0.82rem; color: var(--muted); margin-top: 0.4rem; line-height: 1.5; }
+  .hero-cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .hero-tagline-box {
+    background: var(--ink); border-radius: 14px; padding: 1.5rem 1.75rem;
+    color: #fff;
+  }
+  .hero-tagline-box p {
+    font-size: 0.95rem; line-height: 1.7; color: rgba(255,255,255,0.7);
+  }
+  .hero-tagline-box strong { color: var(--accent-light); font-weight: 500; }
 
   @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fadeIn { from{opacity:0} to{opacity:1} }
@@ -300,20 +322,42 @@
   /* CERTIFICATIONS */
   .cert-list { display: flex; flex-direction: column; gap: 1rem; }
   .cert-item {
-    display: flex; align-items: center; gap: 1.5rem;
+    display: flex; align-items: flex-start; gap: 1.25rem;
     padding: 1.25rem 1.5rem;
-    background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 10px;
-    transition: border-color 0.2s;
+    background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
   }
-  .cert-item:hover { border-color: var(--accent-light); }
+  .cert-item::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--border); border-radius: 3px 0 0 3px;
+    transition: background 0.2s;
+  }
+  .cert-item:hover { border-color: var(--accent-light); transform: translateX(4px); }
+  .cert-item:hover::before { background: var(--accent-light); }
+  .cert-item--featured { border-color: rgba(45,106,79,0.25); background: rgba(45,106,79,0.03); }
+  .cert-item--featured::before { background: var(--accent); }
   .cert-icon {
     width: 42px; height: 42px; flex-shrink: 0;
-    background: rgba(45,106,79,0.08); border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; margin-top: 2px;
   }
-  .cert-name { font-weight: 500; font-size: 0.95rem; color: var(--ink); }
-  .cert-issuer { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+  .cert-icon--gold { background: rgba(183,149,11,0.1); }
+  .cert-icon--blue { background: rgba(29,78,216,0.08); }
+  .cert-icon--tata { background: rgba(45,106,79,0.1); }
+  .cert-name { font-weight: 600; font-size: 0.95rem; color: var(--ink); line-height: 1.35; }
+  .cert-issuer { font-size: 0.82rem; color: var(--accent); margin-top: 3px; font-weight: 500; }
+  .cert-detail { font-size: 0.78rem; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .cert-badge {
+    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.05em;
+    color: var(--muted); border: 0.5px solid var(--border);
+    padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+    align-self: flex-start; margin-top: 2px; flex-shrink: 0;
+  }
+  .cert-badge--accent {
+    color: var(--accent); border-color: rgba(45,106,79,0.3);
+    background: rgba(45,106,79,0.06);
+  }
 
   /* CONTACT */
   .contact-section { background: var(--ink); color: #fff; text-align: center; }
@@ -365,6 +409,7 @@
     .nav-links { gap: 1.2rem; }
     section { padding: 4rem 1.5rem; }
     .hero { padding: 7rem 1.5rem 3rem; }
+    .hero-content { grid-template-columns: 1fr; gap: 2.5rem; }
     .hero-visual { display: none; }
     .about-grid, .experience-grid { grid-template-columns: 1fr; gap: 2rem; }
     .form-row { grid-template-columns: 1fr; }
@@ -391,33 +436,46 @@
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
-    <div class="hero-tag">Available for Opportunities</div>
-    <h1>Vineet<br/>Lot<em>.</em></h1>
-    <p class="hero-sub">Final-year B.Tech student in AI &amp; Data Science. I build production-grade ML models, computer vision systems, and NLP pipelines that create measurable impact.</p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn-primary">View My Work →</a>
-      <a href="#contact" class="btn-outline">Get in Touch</a>
+    <div class="hero-left">
+      <div class="hero-tag">Available for Opportunities</div>
+      <h1>Vineet<br/>Lot<em>.</em></h1>
+      <p class="hero-sub">Data Analyst — Python · SQL · Power BI. I transform raw data into actionable business insights through ETL pipelines, KPI dashboards, and clear data storytelling.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">View My Work →</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="stat-val">60%</div><div class="stat-label">Error Reduction</div></div>
+        <div><div class="stat-val">3+</div><div class="stat-label">Analytics Projects</div></div>
+        <div><div class="stat-val">98%</div><div class="stat-label">Data Integrity</div></div>
+      </div>
     </div>
-    <div class="hero-stats">
-      <div><div class="stat-val">94%</div><div class="stat-label">Model Accuracy</div></div>
-      <div><div class="stat-val">2+</div><div class="stat-label">End-to-end Projects</div></div>
-      <div><div class="stat-val">30 FPS</div><div class="stat-label">Real-time Vision</div></div>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="code-card">
-      <div class="code-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
-      <span class="c-muted"># spam_detector.py</span><br/>
-      <span class="c-blue">import</span> <span>sklearn</span><br/>
-      <span class="c-blue">from</span> <span>sklearn.naive_bayes</span><br/>
-      &nbsp;&nbsp;<span class="c-blue">import</span> MultinomialNB<br/>
-      <br/>
-      <span class="c-muted"># Accuracy achieved</span><br/>
-      accuracy <span class="c-yellow">=</span> <span class="c-green">0.94</span><br/>
-      <br/>
-      model <span class="c-yellow">=</span> MultinomialNB()<br/>
-      model<span class="c-yellow">.</span>fit(X_train, y)<br/>
-      <span class="c-muted"># sub-100ms inference ✓</span>
+    <div class="hero-right">
+      <div class="hero-tagline-box">
+        <p>Skilled in the full <strong>Data Analysis Lifecycle</strong> — from data cleaning and ETL to dashboard development and stakeholder reporting.</p>
+      </div>
+      <div class="hero-cards-grid">
+        <div class="hero-info-card">
+          <div class="hero-card-label">Dashboards</div>
+          <div class="hero-card-val">Power BI</div>
+          <div class="hero-card-desc">DAX, KPI dashboards, drill-downs &amp; real-time reporting</div>
+        </div>
+        <div class="hero-info-card">
+          <div class="hero-card-label">Data Quality</div>
+          <div class="hero-card-val">98%</div>
+          <div class="hero-card-desc">Data integrity achieved on 5,000+ record ETL pipelines</div>
+        </div>
+        <div class="hero-info-card">
+          <div class="hero-card-label">Internship</div>
+          <div class="hero-card-val">3 mo.</div>
+          <div class="hero-card-desc">Data Science &amp; Analytics intern at TechSimPlus</div>
+        </div>
+        <div class="hero-info-card">
+          <div class="hero-card-label">Certified By</div>
+          <div class="hero-card-val" style="font-size:1.15rem;">Tata × NPTEL</div>
+          <div class="hero-card-desc">GenAI Data Analytics &amp; Python for Data Science</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -429,9 +487,9 @@
   <div class="divider"></div>
   <div class="about-grid">
     <div class="about-text">
-      <p>I'm a final-year B.Tech student specialising in Artificial Intelligence &amp; Data Science at Jai Narain College of Technology (LNCT Group), Bhopal. My passion lies in turning raw data into intelligent systems that solve real problems.</p>
-      <p>I've delivered a 94% accurate spam detection classifier and architected a real-time LSTM-based human activity recognition system running at 30 FPS — both from the ground up, from data collection to deployment.</p>
-      <p>I'm seeking a data science or ML engineering role where I can leverage Python, deep learning, and strong problem-solving skills to drive measurable business outcomes.</p>
+      <p>I'm a final-year B.Tech student in AI &amp; Data Science at Jai Narain College of Technology (LNCT Group), Bhopal. My core strength is transforming messy, complex data into clear business insights that drive decisions.</p>
+      <p>I'm experienced across the full Data Analysis Lifecycle — data cleaning, ETL pipeline development, SQL querying, Power BI dashboard building, and stakeholder reporting. I've reduced data errors by 60%, achieved 98%+ data integrity on 5,000+ record datasets, and cut manual processing time by 40% through automated pipelines.</p>
+      <p>I'm seeking a Data Analyst role where I can enable data-driven decision making and deliver measurable business value using Python, SQL, Power BI, and Excel.</p>
     </div>
     <div class="about-info">
       <div class="info-item"><div class="info-label">Location</div><div class="info-val">Itarsi, Madhya Pradesh, India</div></div>
@@ -454,60 +512,64 @@
       <div class="skill-group-title">Languages</div>
       <div class="skill-tags">
         <span class="skill-tag">Python</span>
-        <span class="skill-tag">C++</span>
-        <span class="skill-tag">Java</span>
         <span class="skill-tag">SQL (MySQL)</span>
-        <span class="skill-tag">HTML</span>
-        <span class="skill-tag">CSS</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">HTML / CSS</span>
       </div>
     </div>
     <div class="skill-group">
-      <div class="skill-group-title">ML / AI Frameworks</div>
+      <div class="skill-group-title">Data Analysis</div>
       <div class="skill-tags">
-        <span class="skill-tag">Scikit-learn</span>
-        <span class="skill-tag">TensorFlow</span>
-        <span class="skill-tag">Keras</span>
-        <span class="skill-tag">LSTM</span>
-        <span class="skill-tag">Naive Bayes</span>
-        <span class="skill-tag">MediaPipe</span>
-        <span class="skill-tag">OpenCV</span>
+        <span class="skill-tag">Data Cleaning</span>
+        <span class="skill-tag">ETL Pipelines</span>
+        <span class="skill-tag">Data Validation</span>
+        <span class="skill-tag">KPI Tracking</span>
+        <span class="skill-tag">Statistical Analysis</span>
+        <span class="skill-tag">Data Storytelling</span>
       </div>
     </div>
     <div class="skill-group">
-      <div class="skill-group-title">Data &amp; Visualization</div>
+      <div class="skill-group-title">Dashboards &amp; Reporting</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Power BI</span>
+        <span class="skill-tag">DAX</span>
+        <span class="skill-tag">Advanced Excel</span>
+        <span class="skill-tag">Pivot Tables</span>
+        <span class="skill-tag">VLOOKUP</span>
+        <span class="skill-tag">Plotly</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Data &amp; Libraries</div>
       <div class="skill-tags">
         <span class="skill-tag">Pandas</span>
         <span class="skill-tag">NumPy</span>
         <span class="skill-tag">Matplotlib</span>
         <span class="skill-tag">Seaborn</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-title">Web &amp; Deployment</div>
-      <div class="skill-tags">
-        <span class="skill-tag">Django</span>
-        <span class="skill-tag">REST APIs</span>
-        <span class="skill-tag">Git</span>
-        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Scikit-learn</span>
+        <span class="skill-tag">BeautifulSoup</span>
       </div>
     </div>
     <div class="skill-group">
       <div class="skill-group-title">Concepts</div>
       <div class="skill-tags">
         <span class="skill-tag">NLP</span>
-        <span class="skill-tag">Computer Vision</span>
-        <span class="skill-tag">Deep Learning</span>
-        <span class="skill-tag">Image Processing</span>
+        <span class="skill-tag">Time-Series Analysis</span>
+        <span class="skill-tag">Web Scraping</span>
         <span class="skill-tag">Feature Engineering</span>
+        <span class="skill-tag">Reporting &amp; Insights</span>
       </div>
     </div>
     <div class="skill-group">
-      <div class="skill-group-title">Tools</div>
+      <div class="skill-group-title">Tools &amp; Platforms</div>
       <div class="skill-tags">
-        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">Django</span>
+        <span class="skill-tag">MongoDB</span>
+        <span class="skill-tag">Git / GitHub</span>
         <span class="skill-tag">Jupyter Notebook</span>
         <span class="skill-tag">Google Colab</span>
-        <span class="skill-tag">MS Office</span>
+        <span class="skill-tag">VS Code</span>
       </div>
     </div>
   </div>
@@ -524,14 +586,14 @@
       <div class="timeline">
         <div class="timeline-item">
           <div class="timeline-dot"></div>
-          <div class="timeline-date">June 2024 – August 2024</div>
-          <div class="timeline-role">Python, Data Science &amp; Image Processing Intern</div>
-          <div class="timeline-org">LNCT / Industry Partner · Bhopal, India</div>
+          <div class="timeline-date">01 June 2024 – 31 August 2024 · 3 Months</div>
+          <div class="timeline-role">Data Science &amp; Python Intern</div>
+          <div class="timeline-org">TechSimPlus Learnings · Bhopal, India</div>
           <ul class="timeline-desc" style="list-style:none;margin-top:1rem;">
-            <li>Built an ML image recognition model improving classification accuracy by 25% over baseline using Python and OpenCV.</li>
-            <li>Processed and analysed a 5,000+ record dataset with Pandas and Matplotlib, delivering actionable visual insights to stakeholders.</li>
-            <li>Implemented image preprocessing pipelines (noise reduction, edge detection, segmentation) cutting manual processing time by 40%.</li>
-            <li>Collaborated in an agile team, delivering weekly technical reports and participating in code reviews.</li>
+            <li>Executed data cleaning and ETL on a 5,000+ record dataset, ensuring 98%+ data integrity for downstream analysis.</li>
+            <li>Built data visualization dashboards using Matplotlib and Seaborn, surfacing 3 business insights that directly informed stakeholder decisions.</li>
+            <li>Reduced manual data processing time by 40% through automated analysis pipelines using Python.</li>
+            <li>Delivered weekly KPI reports and stakeholder reporting summaries supporting data-driven decision making across the team.</li>
           </ul>
         </div>
       </div>
@@ -557,11 +619,30 @@
       <h3 style="font-family:'Playfair Display',serif;font-size:1.2rem;margin:2rem 0 1rem;color:var(--muted);">Certifications</h3>
       <div class="cert-list">
         <div class="cert-item">
-          <div class="cert-icon">🏆</div>
-          <div>
+          <div class="cert-icon cert-icon--gold">🏅</div>
+          <div style="flex:1;">
             <div class="cert-name">Python for Data Science</div>
             <div class="cert-issuer">NPTEL · March 2024</div>
           </div>
+          <div class="cert-badge">Verified</div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon cert-icon--blue">🎓</div>
+          <div style="flex:1;">
+            <div class="cert-name">Certificate of Internship</div>
+            <div class="cert-issuer">TechSimPlus Learnings · Sep 2024</div>
+            <div class="cert-detail">Python with Data Science &amp; Image Processing · 3 Months</div>
+          </div>
+          <div class="cert-badge">Cert #24-TSP-PYDS-1036</div>
+        </div>
+        <div class="cert-item cert-item--featured">
+          <div class="cert-icon cert-icon--tata">🌐</div>
+          <div style="flex:1;">
+            <div class="cert-name">GenAI Powered Data Analytics Job Simulation</div>
+            <div class="cert-issuer">Tata Group × Forage · July 2025</div>
+            <div class="cert-detail">EDA · Delinquency Prediction · AI-driven Collections Strategy</div>
+          </div>
+          <div class="cert-badge cert-badge--accent">Tata</div>
         </div>
       </div>
     </div>
@@ -578,35 +659,50 @@
       <div class="project-num">01</div>
       <div class="project-tech">
         <span class="tech-badge">Python</span>
-        <span class="tech-badge">Naive Bayes</span>
-        <span class="tech-badge">NLP</span>
-        <span class="tech-badge">Django</span>
+        <span class="tech-badge">SQL</span>
+        <span class="tech-badge">Power BI</span>
+        <span class="tech-badge">Advanced Excel</span>
       </div>
-      <div class="project-title">Spam Message Detection Using Machine Learning</div>
-      <div class="project-desc">An end-to-end spam classifier with a real-time web interface, enabling users to classify messages instantly via a REST-backed UI.</div>
+      <div class="project-title">Sales &amp; Market Analytics Dashboard</div>
+      <div class="project-desc">An end-to-end analytics solution covering data ingestion, ETL, and executive-level KPI dashboards for real-time business reporting.</div>
       <ul class="project-highlights">
-        <li>94% accuracy on 5,576 SMS messages using Naive Bayes + TF-IDF</li>
-        <li>NLP preprocessing: tokenization, stop-word removal, stemming</li>
-        <li>Sub-100ms inference pipeline for real-time predictions</li>
-        <li>Deployed via Django with a REST API backend</li>
+        <li>Built ETL pipeline — collected, cleaned, and validated data — reducing data errors by 60%</li>
+        <li>Developed Power BI KPI dashboards with DAX and drill-downs enabling real-time stakeholder reporting</li>
+        <li>Used SQL and Excel (Pivot Tables, VLOOKUP) for data storytelling, driving faster business decisions</li>
       </ul>
-      <div class="project-period">Oct 2024 – Dec 2024</div>
+      <div class="project-period">2024</div>
     </div>
     <div class="project-card">
       <div class="project-num">02</div>
       <div class="project-tech">
         <span class="tech-badge">Python</span>
-        <span class="tech-badge">LSTM</span>
-        <span class="tech-badge">MediaPipe</span>
-        <span class="tech-badge">OpenCV</span>
+        <span class="tech-badge">NLP</span>
+        <span class="tech-badge">Data Visualization</span>
+        <span class="tech-badge">Django</span>
       </div>
-      <div class="project-title">Human Activity Recognition Using Deep Learning</div>
-      <div class="project-desc">An LSTM-based deep learning model that classifies 6+ physical activities in real time using skeletal pose keypoints extracted via MediaPipe.</div>
+      <div class="project-title">Spam Detection Analytics Tool</div>
+      <div class="project-desc">A full Data Analysis Lifecycle project — from raw data cleaning and feature engineering to model reporting and an interactive results UI.</div>
       <ul class="project-highlights">
-        <li>Live webcam pipeline achieving real-time inference at 30 FPS</li>
-        <li>High classification accuracy on unseen users</li>
-        <li>Reduced training time by 30% via feature selection and optimized sequence-windowing</li>
-        <li>Trained on skeletal pose keypoints extracted via MediaPipe</li>
+        <li>Analysed 5,576 records: cleaning, feature engineering, modelling, and reporting</li>
+        <li>Achieved 94% accuracy with clear performance reporting dashboard</li>
+        <li>Delivered interactive reporting UI with sub-100ms response via Django</li>
+      </ul>
+      <div class="project-period">Oct 2024 – Dec 2024</div>
+    </div>
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-tech">
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">Deep Learning</span>
+        <span class="tech-badge">OpenCV</span>
+        <span class="tech-badge">Data Visualization</span>
+      </div>
+      <div class="project-title">Human Activity Data Pipeline &amp; Reporting</div>
+      <div class="project-desc">A real-time data pipeline for activity classification with visual insights reports supporting model performance analysis and stakeholder presentations.</div>
+      <ul class="project-highlights">
+        <li>Designed pipeline classifying 6+ activity types at 30 FPS</li>
+        <li>Cut processing time by 30% via feature selection and optimized windowing</li>
+        <li>Produced visual insights reports on model performance for stakeholder presentations</li>
       </ul>
       <div class="project-period">Mar 2025 – Jun 2025</div>
     </div>
@@ -620,21 +716,21 @@
   <div class="divider"></div>
   <div class="blog-grid">
     <div class="blog-card">
-      <div class="blog-tag">NLP</div>
-      <div class="blog-title">How TF-IDF Vectorization Powers Spam Detection</div>
-      <div class="blog-excerpt">A deep dive into term frequency–inverse document frequency and how it transforms raw text into meaningful features for machine learning classifiers.</div>
+      <div class="blog-tag">Power BI</div>
+      <div class="blog-title">Building KPI Dashboards with DAX: A Practical Guide</div>
+      <div class="blog-excerpt">How to design actionable Power BI dashboards with DAX measures, drill-downs, and real-time reporting that stakeholders actually use.</div>
       <div class="blog-meta">Coming Soon · 8 min read</div>
     </div>
     <div class="blog-card">
-      <div class="blog-tag">Computer Vision</div>
-      <div class="blog-title">Real-time Pose Estimation with MediaPipe &amp; OpenCV</div>
-      <div class="blog-excerpt">Exploring how skeletal keypoint extraction enables high-accuracy activity recognition at 30 FPS — and the engineering decisions behind it.</div>
+      <div class="blog-tag">ETL</div>
+      <div class="blog-title">Data Cleaning Best Practices for Analysts Using Python</div>
+      <div class="blog-excerpt">From handling missing values and outliers to building automated ETL pipelines — lessons from cleaning 5,000+ record real-world datasets.</div>
       <div class="blog-meta">Coming Soon · 10 min read</div>
     </div>
     <div class="blog-card">
-      <div class="blog-tag">Deep Learning</div>
-      <div class="blog-title">LSTM Networks for Sequential Data: A Practical Guide</div>
-      <div class="blog-excerpt">From the mathematics of Long Short-Term Memory cells to sequence-windowing strategies that cut training time by 30% in production systems.</div>
+      <div class="blog-tag">SQL</div>
+      <div class="blog-title">SQL for Data Analysts: Beyond the Basics</div>
+      <div class="blog-excerpt">Window functions, CTEs, and advanced query patterns that separate a good data analyst from a great one — with real business examples.</div>
       <div class="blog-meta">Coming Soon · 12 min read</div>
     </div>
   </div>
@@ -645,7 +741,7 @@
   <div class="section-label">Let's Connect</div>
   <h2>Get in Touch</h2>
   <div class="divider"></div>
-  <p class="contact-sub">Open to data science and ML engineering roles. Feel free to reach out — I'd love to talk about your next project.</p>
+  <p class="contact-sub">Open to Data Analyst roles. Feel free to reach out — I'd love to discuss how I can turn your data into actionable insights.</p>
   <div class="contact-links">
     <a class="contact-link" href="mailto:vineetlot6262@gmail.com">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
@@ -694,6 +790,35 @@ document.querySelectorAll('.project-card, .skill-group, .edu-card, .blog-card, .
   el.style.transform = 'translateY(24px)';
   el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   observer.observe(el);
+});
+
+// Floating particles in hero
+const hero = document.querySelector('.hero');
+for(let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  const size = Math.random() * 4 + 2;
+  const x = Math.random() * 100;
+  const y = Math.random() * 100;
+  const dur = Math.random() * 8 + 6;
+  const delay = Math.random() * 5;
+  p.style.cssText = `position:absolute;left:${x}%;top:${y}%;width:${size}px;height:${size}px;
+    border-radius:50%;background:rgba(82,183,136,${Math.random()*0.15+0.05});
+    animation:floatP ${dur}s ${delay}s ease-in-out infinite alternate;pointer-events:none;z-index:0;`;
+  hero.appendChild(p);
+}
+const style = document.createElement('style');
+style.textContent = `@keyframes floatP{from{transform:translateY(0) scale(1)}to{transform:translateY(-30px) scale(1.3)}}`;
+document.head.appendChild(style);
+
+// Smooth active nav highlight
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) current = s.id; });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#'+current ? 'var(--accent)' : '';
+  });
 });
 </script>
 </body>
